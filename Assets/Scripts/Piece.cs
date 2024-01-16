@@ -1,5 +1,4 @@
 using UnityEngine;
-
 public class Piece : MonoBehaviour
 {
     public Board board { get; private set; }
@@ -43,13 +42,13 @@ public class Piece : MonoBehaviour
         // We use a timer to allow the player to make adjustments to the piece
         // before it locks in place
         lockTime += Time.deltaTime;
-
+        
         // Handle rotation
-        if (Input.GetKeyDown(KeyCode.Q)) {
+        if (Input.GetKeyDown(KeyCode.UpArrow)) {
             Rotate(-1);
-        } else if (Input.GetKeyDown(KeyCode.E)) {
-            Rotate(1);
-        }
+        }// else if (Input.GetKeyDown(KeyCode.DownArrow)) {
+        //    Rotate(1);
+       // }
 
         // Handle hard drop
         if (Input.GetKeyDown(KeyCode.Space)) {
@@ -68,12 +67,13 @@ public class Piece : MonoBehaviour
         }
 
         board.Set(this);
+        
     }
 
     private void HandleMoveInputs()
     {
         // Soft drop movement
-        if (Input.GetKey(KeyCode.S))
+        if (Input.GetKey(KeyCode.DownArrow))
         {
             if (Move(Vector2Int.down)) {
                 // Update the step time to prevent double movement
@@ -82,9 +82,9 @@ public class Piece : MonoBehaviour
         }
 
         // Left/right movement
-        if (Input.GetKey(KeyCode.A)) {
+        if (Input.GetKey(KeyCode.LeftArrow)) {
             Move(Vector2Int.left);
-        } else if (Input.GetKey(KeyCode.D)) {
+        } else if (Input.GetKey(KeyCode.RightArrow)) {
             Move(Vector2Int.right);
         }
     }
@@ -115,7 +115,10 @@ public class Piece : MonoBehaviour
     {
         board.Set(this);
         board.ClearLines();
+        board.hasStarted = true;
         board.SpawnPiece();
+  
+        
     }
 
     private bool Move(Vector2Int translation)
